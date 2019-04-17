@@ -1,0 +1,49 @@
+import pandas as pd
+import numpy as np
+import keras
+from keras.models import Sequential
+from keras.layers import Dense
+from keras.layers import dropout
+import matplotlib.pyplot as plt
+
+
+np.random.seed(2)
+
+data = pd.read_csv('creditcard.csv')
+data.head()
+
+# data preprocessing
+# noramlizing data bet -1 to 1
+
+from sklearn.preprocessing import standardScaler
+data['normalizedAmount'] = standardScaler().fit_transform(data['Amount'].values.reshape(-1,1))
+data = data.drop(['Amount'], axis=1)
+
+data = data.drop(['Time'], axis=1)
+
+X = data.iloc[:, data.columns != 'class']
+y = data.iloc[:, data.columns == 'class']
+
+from sklearn.model selection import train_test_split
+X_tarin, X_test, y_train, y_test = train_test_split(X, y, test_size = 0.3, random_state=0)
+
+X_train.shape
+X_test.shape
+
+X_train = np.array(X_train)
+X_test = np.array(X_test)
+Y_train = np.array(y_tain)
+y_test = np.array(y_test)
+
+# building model
+
+model = Sequential([
+    Dense(units=16,input_dim = 29,activation='relu'),
+    Dense(units=24,activation='relu'),
+    Dropout(0.5),
+    Dense(20,activation='relu'),
+    Dense(24,activation='relu'),
+    Dense(1,activation='sigmoid'),
+    ])
+
+model.summary()
